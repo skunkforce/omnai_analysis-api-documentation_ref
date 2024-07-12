@@ -1,0 +1,100 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "OmnAIView- OpenAPI 3.0.1",
+      "version": "0.1.0",
+      "description": "This is the description of the API used for the OmnAIView software. For each analysis that can be connected to the OmnAIView software an API has to be provided. This API should be implementing the following Interface.\n\nSome useful links:\n- [OmnAIView Repository](https://github.com/skunkforce/OmniView)\n- [OmnAIView FFT example FFT]()"
+    },
+    "tags": [
+      {
+        "name": "Informations",
+        "description": "Everything to know about the API"
+      },
+      {
+        "name": "Analyze and Generate Training data",
+        "description": "Endpoints for the analysis"
+      },
+      {
+        "name": "Test your API",
+        "description": "Endpoints to test your API"
+      }
+    ],
+    "paths": {
+      "/version": {
+        "get": {
+          "tags": ["Informations"],
+          "summary": "Get version",
+          "description": "Get the current version of the API ; format main.feature.patch",
+          "operationId": "getVersion",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AppVersion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/info": {
+        "get": {
+          "tags": ["Informations"],
+          "summary": "Get Information",
+          "description": "Get Information about the APIs function and main usage",
+          "operationId": "getInfo",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/APIInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "AppVersion": {
+          "type": "object",
+          "properties": {
+            "app_version": {
+              "type": "string",
+              "title": "App Version"
+            },
+            "commit_hash": {
+              "type": "string",
+              "title": "Commit Hash"
+            },
+            "build_date": {
+              "type": "string",
+              "title": "Build Date"
+            },
+            "maintainer": {
+              "type": "string",
+              "title": "Maintainer"
+            }
+          },
+          "required": ["app_version", "commit_hash", "build_date", "maintainer"],
+          "title": "AppVersion"
+        },
+        "APIInfo": {
+            "type": "object",
+            "properties": {
+              "apiVersion": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "title": "API Information"
+          }
+      }
+    }
+  }
+  
