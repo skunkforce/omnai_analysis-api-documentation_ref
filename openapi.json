@@ -108,7 +108,53 @@
             },
             "responses": {
               "200": {
-                "description": "Successful analysis with FFT result.",
+                "description": "Successful analysis",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/FFTResult"
+                    }
+                  }
+                }
+              },
+              "400": {
+                "description": "Invalid request format or data.",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "examples": ["Invalid waveform data."]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+      },
+      "/generateTrainingData": {
+          "post": {
+            "tags": ["Analyze and Generate Training data"],
+            "summary": "Generate Training data",
+            "description": "Taking the data that was send for a AI-Modell, if not needed there still should be a response",
+            "operationId": "analyzeWaveform",
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Waveform"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Data was send successfully",
                 "content": {
                   "application/json": {
                     "schema": {
