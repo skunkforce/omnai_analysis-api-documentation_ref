@@ -1,261 +1,331 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-      "title": "OmnAIView- OpenAPI 3.0.1",
-      "version": "0.1.0",
-      "description": "This is the description of the API used for the OmnAIView software. For each analysis that can be connected to the OmnAIView software an API has to be provided. This API should be implementing the following Interface.\n\nSome useful links:\n- [OmnAIView Repository](https://github.com/skunkforce/OmniView)\n- [OmnAIView FFT example FFT]()"
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OmnAIView- OpenAPI 3.0.1",
+    "version": "0.1.0",
+    "description": "This is the description of the API used for the OmnAIView software. For each analysis that can be connected to the OmnAIView software an API has to be provided. This API should be implementing the following Interface.\n\nSome useful links:\n- [OmnAIView Repository](https://github.com/skunkforce/OmniView)\n- [OmnAIView FFT example FFT]()"
+  },
+  "tags": [
+    {
+      "name": "Informations",
+      "description": "Everything to know about the API"
     },
-    "tags": [
-      {
-        "name": "Informations",
-        "description": "Everything to know about the API"
-      },
-      {
-        "name": "Analyze and Generate Training data",
-        "description": "Endpoints for the analysis"
-      },
-      {
-        "name": "Test your API",
-        "description": "Endpoints to test your API"
-      }
-    ],
-    "paths": {
-      "/version": {
-        "get": {
-          "tags": ["Informations"],
-          "summary": "Get version",
-          "description": "Get the current version of the API ; format main.feature.patch",
-          "operationId": "getVersion",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AppVersion"
-                  }
+    {
+      "name": "Analyze and Generate Training data",
+      "description": "Endpoints for the analysis"
+    },
+    {
+      "name": "Test your API",
+      "description": "Endpoints to test your API"
+    }
+  ],
+  "paths": {
+    "/version": {
+      "get": {
+        "tags": [
+          "Informations"
+        ],
+        "summary": "Get version",
+        "description": "Get the current version of the API ; format main.feature.patch",
+        "operationId": "getVersion",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppVersion"
                 }
               }
             }
           }
         }
-      },
-      "/info": {
-        "get": {
-          "tags": ["Informations"],
-          "summary": "Get Information",
-          "description": "Get Information about the APIs function and main usage",
-          "operationId": "getInfo",
-          "responses": {
-            "200": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/APIInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/getMetadata": {
-        "get": {
-          "tags": ["Analyze and Generate Training data"],
-          "summary": "Get the Datatypes for the form", 
-          "description": "Forms are loaded dynamically into the software, therefore all APIs should provide information about the fields they need in the software",
-          "operationId": "getForm", 
-          "responses": {
-            "200": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/FormInfo"
-                      }
-                    }
-                }
-            },
-            "400": {
-              "description": "Invalid Type", 
-              "content": {
-                "application/json": {
-                    "schema": {
-                    "$ref": "#/components/schemas/FormInfo"
-                      }
-                }
-            }
-          }
-        }
-      }
-     },
-      "/analyze": {
-          "post": {
-            "tags": ["Analyze and Generate Training data"],
-            "summary": "Analyze Waveform",
-            "description": "Doing an analysis on send data and responding with an answer",
-            "operationId": "analyzeWaveform",
-            "requestBody": {
-              "required": true,
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Waveform"
-                  }
-                }
-              }
-            },
-            "responses": {
-              "200": {
-                "description": "Successful analysis",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/FFTResult"
-                    }
-                  }
-                }
-              },
-              "400": {
-                "description": "Invalid request format or data.",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "examples": ["Invalid waveform data."]
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-      },
-      "/generateTrainingData": {
-          "post": {
-            "tags": ["Analyze and Generate Training data"],
-            "summary": "Generate Training data",
-            "description": "Taking the data that was send for a AI-Modell, if not needed there still should be a response",
-            "operationId": "analyzeWaveform",
-            "requestBody": {
-              "required": true,
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Waveform"
-                  }
-                }
-              }
-            },
-            "responses": {
-              "200": {
-                "description": "Data was send successfully",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/FFTResult"
-                    }
-                  }
-                }
-              },
-              "400": {
-                "description": "Invalid request format or data.",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "examples": ["Invalid waveform data."]
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
       }
     },
-    "components": {
-      "schemas": {
-        "AppVersion": {
-          "type": "object",
-          "properties": {
-            "app_version": {
-              "type": "string",
-              "title": "App Version"
-            },
-            "commit_hash": {
-              "type": "string",
-              "title": "Commit Hash"
-            },
-            "build_date": {
-              "type": "string",
-              "title": "Build Date"
-            },
-            "maintainer": {
-              "type": "string",
-              "title": "Maintainer"
+    "/info": {
+      "get": {
+        "tags": [
+          "Informations"
+        ],
+        "summary": "Get Information",
+        "description": "Get Information about the APIs function and main usage",
+        "operationId": "getInfo",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getMetadata": {
+      "get": {
+        "tags": [
+          "Analyze and Generate Training data"
+        ],
+        "summary": "Get the Datatypes for the form",
+        "description": "Forms are loaded dynamically into the software, therefore all APIs should provide information about the fields they need in the software",
+        "operationId": "getForm",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormInfo"
+                }
+              }
             }
           },
-          "required": ["app_version", "commit_hash", "build_date", "maintainer"],
-          "title": "AppVersion"
-        },
-        "APIInfo": {
-            "type": "object",
-            "properties": {
-              "apiVersion": { "type": "string" },
-              "description": { "type": "string" }
-            },
-            "title": "API Information"
-          },
-        "FormInfo": {
-            "type": "object",
-            "properties": {
-              "apiVersion": { "type": "string" },
-              "description": { "type": "string" }
-            },
-            "title": "API Information"
-          },
-        "Waveform": {
-            "type": "object",
-            "properties": {
-              "meta": { "type": "array", "items": { "type": "string" } },
-              "data": {
-                "type": "object",
-                "properties": {
-                  "sampling_rate": { "type": "number", "format": "float" },
-                  "y_values": { "type": "array", "items": { "type": "number", "format": "float" } }
-                },
-                "required": ["sampling_rate", "y"]
-              }
-            },
-            "required": ["meta", "data"],
-            "title": "Waveform"
-          },
-          "FFTResult": {
-            "type": "object",
-            "properties": {
-              "fft": {
-                "type": "array",
-                "items": {
+          "400": {
+            "description": "Invalid Type",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
                   "properties": {
-                    "frequency": { "type": "number", "format": "float" },
-                    "amplitude": { "type": "number", "format": "float" }
+                    "error": {
+                      "type": "string",
+                      "examples": [
+                        "Invalid type provided or wrong format provided."
+                      ]
+                    }
                   }
                 }
               }
-            },
-            "title": "FFTResult"
+            }
           }
+        }
+      }
+    },
+    "/analyze": {
+      "post": {
+        "tags": [
+          "Analyze and Generate Training data"
+        ],
+        "summary": "Analyze Waveform",
+        "description": "Analysing the data that was send and responding with an answer. If only data should be generated this should still answer with a sucessful response.",
+        "operationId": "analyzeWaveform",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Waveform"
+              }
+            }
+          }
+        },
+        "responses": { // TODO: Create a default reponse when data should only be used for training
+          "200": {
+            "description": "Successful analysis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFTResult" // TODO: Change this to a more general answer
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format or data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "examples": [
+                        "Invalid waveform data."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generateTrainingData": {
+      "post": {
+        "tags": [
+          "Analyze and Generate Training data"
+        ],
+        "summary": "Generate Training data",
+        "description": "Taking the data that was send for a AI-Modell, if not needed there still should be a response",
+        "operationId": "generateTrainingData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Waveform"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data was send successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "examples": [
+                        "Data was send successfully"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format or data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "examples": [
+                        "Invalid waveform data."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  // TODO: Create check-requests for new APIs  
+  "components": {
+    "schemas": {
+      "AppVersion": {
+        "type": "object",
+        "properties": {
+          "app_version": {
+            "type": "string",
+            "title": "App Version"
+          },
+          "commit_hash": {
+            "type": "string",
+            "title": "Commit Hash"
+          },
+          "build_date": {
+            "type": "string",
+            "title": "Build Date"
+          },
+          "maintainer": {
+            "type": "string",
+            "title": "Maintainer"
+          }
+        },
+        "required": [
+          "app_version",
+          "commit_hash",
+          "build_date",
+          "maintainer"
+        ],
+        "title": "AppVersion"
+      },
+      "APIInfo": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "title": "API Information"
+      },
+      "FormInfo": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "title": "API Information"
+      },
+      "Waveform": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "sampling_rate": {
+                "type": "number",
+                "format": "float"
+              },
+              "y_values": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            },
+            "required": [
+              "sampling_rate",
+              "y"
+            ]
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ],
+        "title": "Waveform"
+      },
+      "FFTResult": { // ToDO: create a more general answer of the analysis 
+        "type": "object",
+        "properties": {
+          "fft": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "frequency": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "amplitude": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        },
+        "title": "FFTResult"
       }
     }
   }
+}
