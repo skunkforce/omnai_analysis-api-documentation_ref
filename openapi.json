@@ -236,7 +236,6 @@
             "properties": {}
           },
           "data": {
-            "title": "Daten",
             "type": "object",
             "properties": {
               "sampling_rate": {
@@ -265,13 +264,8 @@
       },
       "Result": { 
         "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "description": "Here are all informations that the user gets from the analysis, the data field needs to be set here in the properties",
-            "properties": {}
-          }
-      }
+        "description": "Here are all informations that the user gets from the analysis, the data field needs to be set here in the properties",
+        "properties": {}
       }
     }
   }
