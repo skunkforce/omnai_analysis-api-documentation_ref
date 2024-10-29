@@ -64,53 +64,13 @@
         }
       }
     },
-    "/getMetadata": {
-      "get": {
-        "tags": [
-          "Analyze and Generate Training data"
-        ],
-        "summary": "Get the Datatypes for the form",
-        "description": "Forms are loaded dynamically into the software, therefore all APIs should provide information about the fields they need in the software",
-        "operationId": "getForm",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid Type",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "examples": [
-                        "Invalid type provided or wrong format provided."
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/analyze": {
       "post": {
         "tags": [
           "Analyze and Generate Training data"
         ],
         "summary": "Analyze Waveform",
-        "description": "Analysing the data that was send and responding with an answer. If only data should be generated this should still answer with a sucessful response.",
+        "description": "Analysing the data that was send and responding with an answer. If only data should be generated this should still answer with a sucessful response. If metadata is needed this information will be transfered from the user via a form. To generate the correct form fields each formular field has a specific datatype. This datatype should be set as the type property. If a description to the field should be visible in the form, this needs to be added as a title. The following table lists the datatypes for each form field: int :: number field, string :: Input field, enum :: Drop Down Menu, boolean :: Radio Buttons. The fields need to be described in the properties section of the meta field. The response follows the same rules. The data field will be visualized as a drag and drop field for the request and is optional for the response.",
         "operationId": "analyzeWaveform",
         "requestBody": {
           "required": true,
@@ -122,13 +82,13 @@
             }
           }
         },
-        "responses": { // TODO: Create a default reponse when data should only be used for training
+        "responses": { 
           "200": {
             "description": "Successful analysis",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FFTResult" // TODO: Change this to a more general answer
+                  "$ref": "#/components/schemas/Result"
                 }
               }
             }
@@ -154,14 +114,14 @@
         }
       }
     },
-    "/generateTrainingData": {
+    "/upload": {
       "post": {
         "tags": [
           "Analyze and Generate Training data"
         ],
-        "summary": "Generate Training data",
-        "description": "Taking the data that was send for a AI-Modell, if not needed there still should be a response",
-        "operationId": "generateTrainingData",
+        "summary": "Upload Training data",
+        "description": "Taking the data that was send for a AI-Modell, if not needed there still should be a response. If additional metadata is needed the form follows the same rules as the analyze endpoint.",
+        "operationId": "uploadTrainingData",
         "requestBody": {
           "required": true,
           "content": {
@@ -212,8 +172,7 @@
         }
       }
     }
-  },
-  // TODO: Create check-requests for new APIs  
+  }, 
   "components": {
     "schemas": {
       "AppVersion": {
@@ -272,10 +231,9 @@
         "type": "object",
         "properties": {
           "meta": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "object",
+            "description": "Here are all informations that are needed for the formular fields",
+            "properties": {}
           },
           "data": {
             "type": "object",
@@ -304,27 +262,10 @@
         ],
         "title": "Waveform"
       },
-      "FFTResult": { // ToDO: create a more general answer of the analysis 
+      "Result": { 
         "type": "object",
-        "properties": {
-          "fft": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "frequency": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "amplitude": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        },
-        "title": "FFTResult"
+        "description": "Here are all informations that the user gets from the analysis, the data field needs to be set here in the properties",
+        "properties": {}
       }
     }
   }
